@@ -19,16 +19,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
- <!--   <Button
-        android:id="@+id/twitter_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="login with twitter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />-->
-
     <com.facebook.login.widget.LoginButton
         android:id="@+id/facebook_login"
         android:layout_width="wrap_content"
