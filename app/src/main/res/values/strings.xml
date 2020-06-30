@@ -2,5 +2,8 @@
     <string name="app_name">Lets Connect</string>
     <string name="facebook_app_id">993424354419914</string>
     <string name="fb_login_protocol_scheme">fb993424354419914</string>
+    <string name="twitter_api_key">4UzLmrFRbIYcGamcacRJenkDh</string>
+    <string name="twitter_api_secret_key">YZ02su2q29XR0lzjXJsGukPbh31bRcHZcG25Gd4rIpkDt7SPm8</string>
+    <string name="twitter_default_text">Your user Id</string>
     <string name="default_text">Your FB name</string>
 </resources>
