@@ -10,8 +10,4 @@
     <string-array name="snap_connect_scopes">
         <item>https://auth.snapchat.com/oauth2/api/user.display_name</item>
     </string-array>
-    <string-array name="linkedin_scopes">
-        <item>https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))</item>
-        <item>https://api.linkedin.com/v2/emailAddress?q=members&amp;projection=(elements*(handle~))</item>
-    </string-array>
 </resources>
