@@ -1,14 +1,11 @@
 <resources>
     <string name="app_name">Lets Connect</string>
-    <string name="facebook_app_id">993424354419914</string>
-    <string name="fb_login_protocol_scheme">fb993424354419914</string>
-    <string name="twitter_api_key">4UzLmrFRbIYcGamcacRJenkDh</string>
-    <string name="twitter_api_secret_key">YZ02su2q29XR0lzjXJsGukPbh31bRcHZcG25Gd4rIpkDt7SPm8</string>
+     <string name="facebook_app_id">Your app id</string>
+    <string name="fb_login_protocol_scheme">Your login protocol scheme4</string>
+    <string name="twitter_api_key">Your secret key</string>
+    <string name="twitter_api_secret_key">Your api secret key</string>
     <string name="twitter_default_text">Your user Id</string>
-    <string name="linkedin_client_id">780j75ws6rcneu</string>
-    <string name="linkedin_client_secret">VLEcCsX5RZJCNzsa</string>
-    <string name="snapchat_id">39bc2edc-0ebe-4b3c-a1d7-d339c5df1909</string>
-    <string name="just">7nFFwHNVQ1_kgmXK5n50o8YyKxmMOimpJ</string>
+    <string name="snapchat_id">Your client id</string>
     <string name="default_text">Your FB name</string>
     <string-array name="snap_connect_scopes">
         <item>https://auth.snapchat.com/oauth2/api/user.display_name</item>
