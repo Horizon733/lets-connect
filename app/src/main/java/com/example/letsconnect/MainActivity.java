@@ -27,22 +27,18 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.snapchat.kit.sdk.login.models.UserDataResponse;
+import com.snapchat.kit.sdk.login.networking.FetchUserDataCallback;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.DefaultLogger;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.TwitterApiClient;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
-import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
-import com.twitter.sdk.android.core.models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,10 +47,11 @@ import org.w3c.dom.Text;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-
+import com.snapchat.kit.sdk.SnapLogin;
+import com.snapchat.kit.sdk.core.controller.LoginStateController;
+import com.snapchat.kit.sdk.login.models.MeData;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.facebook_login)
@@ -65,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
     TwitterLoginButton twitterLogin;
     @BindView(R.id.twitter_user_id)
     TextView twitterUserId;
+    @BindView(R.id.snapchat_login)
+    Button snapchat_login_button;
+    @BindView(R.id.snapchat_user_id)
+    TextView snapchat_name;
     private static final String EMAIL = "email";
     CallbackManager callbackManager = CallbackManager.Factory.create();
 
@@ -129,8 +130,68 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "failed", Toast.LENGTH_SHORT).show();
             }
         });
+
+        snapchat_login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SnapLogin.getAuthTokenManager(MainActivity.this).startTokenGrant();
+                getUserNameSnapChat();
+            }
+        });
+
+        SnapLogin.getLoginStateController(MainActivity.this).addOnLoginStateChangedListener(snapchatLoginButton());
+
     }
 
+   private LoginStateController.OnLoginStateChangedListener snapchatLoginButton(){
+       LoginStateController.OnLoginStateChangedListener loginStateController =  new LoginStateController.OnLoginStateChangedListener(){
+
+           @Override
+           public void onLoginSucceeded() {
+               Toast.makeText(MainActivity.this,"login Successfull",Toast.LENGTH_SHORT).show();
+               Log.e("Main Activity snapchat","login Successfull");
+
+           }
+
+           @Override
+           public void onLoginFailed() {
+               Toast.makeText(MainActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
+           }
+
+           @Override
+           public void onLogout() {
+               Toast.makeText(MainActivity.this,"Logout Success!",Toast.LENGTH_SHORT).show();
+           }
+       };
+        return loginStateController;
+    }
+
+   void getUserNameSnapChat(){
+       boolean isLogedIn = SnapLogin.isUserLoggedIn(MainActivity.this);
+       if(isLogedIn) {
+           String query = "{me{displayName}}";
+           SnapLogin.fetchUserData(MainActivity.this, query, null, new FetchUserDataCallback() {
+               @Override
+               public void onSuccess(@Nullable UserDataResponse userDataResponse) {
+                   if (userDataResponse == null || userDataResponse.getData() == null) {
+                       Log.e("Main Activity snapchat ", "null");
+                       return;
+                   }
+
+                   MeData meData = userDataResponse.getData().getMe();
+                   if (meData == null) {
+                       return;
+                   }
+                   snapchat_name.setText(meData.getDisplayName());
+               }
+
+               @Override
+               public void onFailure(boolean b, int i) {
+                   Toast.makeText(MainActivity.this, "Sorry problem with fetching try again", Toast.LENGTH_SHORT).show();
+               }
+           });
+       }
+   }
     private void getUserName(AccessToken accessToken) {
         GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
@@ -195,4 +256,7 @@ public class MainActivity extends AppCompatActivity {
         twitterLogin.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
+
 }

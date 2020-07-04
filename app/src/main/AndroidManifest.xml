@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="com.snapchat.kit.sdk.clientId" android:value="@string/snapchat_id" />
+        <meta-data android:name="com.snapchat.kit.sdk.redirectUrl" android:value="letsconnect://snap-kit/oauth2" />
+        <meta-data android:name="com.snapchat.kit.sdk.scopes" android:resource="@array/snap_connect_scopes" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,8 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
+
 
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
@@ -31,8 +36,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="@string/fb_login_protocol_scheme" />
+
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.snapchat.kit.sdk.SnapKitActivity"
+            android:launchMode="singleTask">
+        <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+            <data
+                android:scheme="letsconnect"
+                android:host="snap-kit"
+                android:path="/oauth2" />
+        </intent-filter>
+    </activity>
     </application>
 
 </manifest>

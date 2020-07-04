@@ -16,24 +16,18 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug {
-            applicationIdSuffix ".debug"
-            debuggable true
-        }
-        staging {
-            initWith debug
-            manifestPlaceholders = [hostName:"internal.example.com"]
-            applicationIdSuffix ".debugStaging"
-        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+    ext {
+        snapKitSdkVersion = '1.4.0'
+    }
 }
 
 dependencies {
@@ -48,5 +42,10 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
-
+    implementation 'com.squareup.retrofit2:converter-gson'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation([
+            'com.snapchat.kit.sdk:login:1.1.4', // for Login Kit
+            'com.snapchat.kit.sdk:core:1.1.4',  // core dependency for all of the above Kits
+    ])
 }
